@@ -74,13 +74,44 @@
         user.username = username;
         user.roles = roles;
         user.active = active;
+
+        // Check if password is provided
+        if(password) {
+            // Hash password
+            user.password = await bcrypt.hash(password, 10);
+        }
+        // Update user
+        const updatedUser = await user.save();
+
+        res.json({ message: `User ${updatedUser.username} updated successfully` });
     });
 
     // @desc Delete a user
     // @route DELETE /users
     // @access Private
     const deleteUser = asyncHandler(async (req, res) => {
+        const { id } = req.body;
+        // Check if id is provided
+        if(!id) {
+            return res.status(400).json({ message: 'Id is required' });
+        }
+        // Check if user has notes
+        const notes = await Note.find({ user: id }).lean().exec();
+        if(notes?.length) {
+            return res.status(400).json({ message: 'User has notes' });
+        }
+        // Delete user
+        const user = await User.findByIdAndDelete(id).exec();
+        // Check if user exists
+        if(!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+        // result is the deleted user
+        const result = await user.deleteOne();
 
+        const reply = `User ${result.username} with ID ${result._id} deleted successfully`;
+
+        res.json(reply);
     });
 
     module.exports = {
