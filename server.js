@@ -1,12 +1,39 @@
+// Description: This file is the entry point for the application. It creates the server and listens for requests.
+// It also uses middleware to handle requests and errors.
+
+// dotenv is used to load environment variables from a .env file into process.env.
+require('dotenv').config();
+
+// express is used to create the server. It is a node module.
 const express = require('express');
+
+// app is the express application. It is used to create the server.
 const app = express();
+
+// Path is used to get the path to the current directory.
 const path = require('path');
+
+// logger is used to log requests to the console and to a file.
 const { logger } = require('./middleware/logger');
+
+// errorHandler is used to handle errors. It takes an error, request, response, and next as parameters.
 const errorHandler = require('./middleware/errorHandler');
+
+// cookieParser is used to parse cookies. parse cookies means to decode the cookie string and convert it to an object.
 const cookieParser = require('cookie-parser');
+
+// cors is used to allow or restrict access to the API based on the origin of the request.
 const cors = require('cors');
+
+// corsOptions is used to configure the CORS options for the app.
+// CORS options are the rules that are applied to the CORS middleware.
 const corsOptions = require('./config/corsOptions');
+
+// PORT is the port the application is running on. It is set to 8080 if the PORT environment variable is not set.
 const PORT = process.env.PORT || 8080;
+
+// ENV is the environment the application is running in. IE development, production, etc.
+console.log(process.env.NODE_ENV);
 
 // Tells express to use the middleware folder for middleware.
 // logger is the name of the js file in the middleware' folder.
@@ -45,6 +72,7 @@ app.all('*', (req, res) => {
 // Uses the errorHandler middleware to handle errors.
 app.use(errorHandler);
 
+// Tells the application to listen for requests on the PORT.
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
