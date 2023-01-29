@@ -29,11 +29,23 @@ const cors = require('cors');
 // CORS options are the rules that are applied to the CORS middleware.
 const corsOptions = require('./config/corsOptions');
 
+// connectDB is used to connect to the database. It is a function that returns a promise.
+// The promise resolves when the connection is successful and rejects when the connection is unsuccessful.
+const connectDB = require('./config/dbConn');
+
+// mongoose is used to connect to the database.
+const mongoose = require('mongoose');
+
+// logEvents is used to log events to the console and to a file.
+const { logEvents} = require('./middleware/logger');
+
 // PORT is the port the application is running on. It is set to 8080 if the PORT environment variable is not set.
 const PORT = process.env.PORT || 8080;
 
 // ENV is the environment the application is running in. IE development, production, etc.
 console.log(process.env.NODE_ENV);
+
+connectDB();
 
 // Tells express to use the middleware folder for middleware.
 // logger is the name of the js file in the middleware' folder.
@@ -57,6 +69,8 @@ app.use('/', express.static(path.join(__dirname, '/public')));
 // roots is the name of the js file in the routes' folder.
 app.use('/', require('./routes/root'));
 
+app.use('/users', require('./routes/userRoutes'));
+
 // sends 404 error if no route is found.
 app.all('*', (req, res) => {
     res.status(404)
@@ -73,6 +87,14 @@ app.all('*', (req, res) => {
 app.use(errorHandler);
 
 // Tells the application to listen for requests on the PORT.
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+mongoose.connection.once('open', () => {
+  console.log('Connected to database');
+  app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
+
+})
+
+mongoose.connection.on('error', (err) => {
+  console.log(err)
+  logEvents(`${err.no}: ${err.code}\t{err.syscall}\t${err.hostname}`,
+      'mongoErrLog.log')
 });
