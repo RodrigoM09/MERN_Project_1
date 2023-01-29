@@ -96,8 +96,8 @@
             return res.status(400).json({ message: 'Id is required' });
         }
         // Check if user has notes
-        const notes = await Note.find({ user: id }).lean().exec();
-        if(notes?.length) {
+        const note = await Note.find({ user: id }).lean().exec();
+        if(note) {
             return res.status(400).json({ message: 'User has notes' });
         }
         // Delete user
