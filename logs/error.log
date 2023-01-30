@@ -1,0 +1,5 @@
+20230129	13:52:47	30e73602-b71c-4a96-8d8b-9e79f526d8bd	TypeError: allowedOrigins.indexOf is not a function	GET	/	undefined
+20230129	13:52:57	d3491563-9ca3-4f03-884e-091abe6d7b65	TypeError: allowedOrigins.indexOf is not a function	OPTIONS	/	https://www.google.com
+20230129	13:52:57	43afc7e1-8777-4322-becd-76f0c82a7b88	TypeError: allowedOrigins.indexOf is not a function	GET	/	https://www.google.com
+20230129	14:02:40	c1c91212-89d1-4dad-a6ad-f061d8e783b5	Error: Not allowed by CORS	OPTIONS	/	https://www.google.com
+20230129	14:02:40	6349b273-9c98-4435-95dc-37cfa6320c40	Error: Not allowed by CORS	GET	/	https://www.google.com
