@@ -40,7 +40,7 @@ const mongoose = require('mongoose');
 const { logEvents} = require('./middleware/logger');
 
 // PORT is the port the application is running on. It is set to 8080 if the PORT environment variable is not set.
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3500;
 
 // ENV is the environment the application is running in. IE development, production, etc.
 console.log(process.env.NODE_ENV);
