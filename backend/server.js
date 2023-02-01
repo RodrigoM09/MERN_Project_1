@@ -14,10 +14,10 @@ const app = express();
 const path = require('path');
 
 // logger is used to log requests to the console and to a file.
-const { logger } = require('./middleware/logger');
+const { logger } = require('../backend/middleware/logger');
 
 // errorHandler is used to handle errors. It takes an error, request, response, and next as parameters.
-const errorHandler = require('./middleware/errorHandler');
+const errorHandler = require('../backend/middleware/errorHandler');
 
 // cookieParser is used to parse cookies. parse cookies means to decode the cookie string and convert it to an object.
 const cookieParser = require('cookie-parser');
@@ -27,17 +27,17 @@ const cors = require('cors');
 
 // corsOptions is used to configure the CORS options for the app.
 // CORS options are the rules that are applied to the CORS middleware.
-const corsOptions = require('./config/corsOptions');
+const corsOptions = require('../backend/config/corsOptions');
 
 // connectDB is used to connect to the database. It is a function that returns a promise.
 // The promise resolves when the connection is successful and rejects when the connection is unsuccessful.
-const connectDB = require('./config/dbConn');
+const connectDB = require('../backend/config/dbConn');
 
 // mongoose is used to connect to the database.
 const mongoose = require('mongoose');
 
 // logEvents is used to log events to the console and to a file.
-const { logEvents} = require('./middleware/logger');
+const { logEvents} = require('../backend/middleware/logger');
 
 // PORT is the port the application is running on. It is set to 8080 if the PORT environment variable is not set.
 const PORT = process.env.PORT || 3000;
